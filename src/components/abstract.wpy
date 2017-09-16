@@ -54,10 +54,16 @@
 <template>
   <view class="item" @tap="tap">
     <image
+      wx:if="{{type === 'image'}}"
       src="{{image}}"
       class="image"
       style="width: {{width - 38}}px; height: {{(width - 38) / 14.4 * 9}}px;">
     </image>
+    <video
+      wx:else
+      src="{{image}}"
+      style="width: {{width - 38}}px; height: {{(width - 38) / 14.4 * 9}}px;">
+    </video>
     <view style="width: {{windowWidth - 38}}px;" class="itemBottom">
       <text class="title">{{message.title}}</text>
     </view>
@@ -79,6 +85,7 @@
 
     props = {
       message: Object,
+      type: String,
       image: String,
       width: Number
     }

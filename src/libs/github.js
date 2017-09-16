@@ -48,6 +48,7 @@ export async function mapIssues () {
     if (resp.statusCode === 200) {
       let last = ''
       let images = []
+      let type = []
       let mapImage = []
 
       // 解析 json 数据
@@ -62,11 +63,13 @@ export async function mapIssues () {
         for (let j = 0; j < mapImage.length; j++) {
           if (issues[i].number === mapImage[j].id) {
             images.push(mapImage[j].url)
+            type.push(mapImage[j].type)
             break
           }
         }
         if (!images[i]) {
           images.unshift('')
+          type.unshift('')
         }
       }
 
@@ -76,7 +79,7 @@ export async function mapIssues () {
         console.log(e)
       }
 
-      return [images, last]
+      return [images, type, last]
     }
 
     return []
