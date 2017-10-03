@@ -54,7 +54,7 @@
 <template>
   <view class="item" @tap="tap">
     <image
-      wx:if="{{type === 'image'}}"
+      wx:if="{{type == 'image'}}"
       src="{{image}}"
       class="image"
       style="width: {{width - 38}}px; height: {{(width - 38) / 14.4 * 9}}px;">
