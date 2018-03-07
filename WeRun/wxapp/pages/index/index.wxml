@@ -1,0 +1,10 @@
+<view class="container" style="height: {{windowHeight}}px; width: {{windowWidth}}px;">
+  <canvas
+    canvas-id="lineCanvas"
+    disable-scroll="true"
+    class="canvas"
+    bindtouchstart="onTouch"
+    bindtouchmove="onMove"
+    bindtouchend="onTouchEnd"
+    style="height: 100%; width: 100%;"></canvas>
+</view>
