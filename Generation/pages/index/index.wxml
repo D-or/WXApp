@@ -1,0 +1,66 @@
+<scroll-view
+  scroll-y
+  style="height: {{windowHeight}}px;"
+  class="container">
+  <view class="generate_content {{generated ? 'generate_content_blur' : ''}}">
+    <view
+      style="height: {{windowWidth - 60}}px; width: {{windowWidth - 60}}px;"
+      class="image_content"
+      bindtap="onChooseImage">
+      <image
+        wx:if="{{image}}"
+        src="{{image}}"
+        class="image_choose"
+        mode="aspectFit">
+      </image>
+      <image
+        wx:else
+        src="../../src/image/add_image.png"
+        class="image_add"
+        mode="aspectFit">
+      </image>
+    </view>
+    <form bindsubmit="onGenerate">
+      <view wx:for="{{textLines}}" wx:key="index">
+        <view
+          style="width: {{windowWidth - 80}}px;"
+          class="input_content">
+          <input class="input" name="{{index}}" maxlength="11" />
+        </view>
+        <view
+          wx:if="{{index === textLines - 1}}"
+          class="text_adding_content">
+          <text class="text_ps">（现在最多只能添加三句）</text>
+          <image
+            wx:if="{{index !== 2}}"
+            src="../../src/image/add_text.png"
+            class="image_text_op"
+            bindtap="onAddText"></image>
+          <image
+            wx:if="{{index !== 0}}"
+            src="../../src/image/minus_text.png"
+            class="image_text_op"
+            bindtap="onMinuxText"></image>
+        </view>
+      </view>
+      <button
+        formType="submit"
+        style="width: {{windowWidth - 60}}px;"
+        class="positive_button">生成</button>
+    </form>
+  </view>
+  <view wx:if="{{generated}}" class="generated_content">
+    <image
+      src="{{generated}}"
+      style="height: {{windowWidth - 60}}px; width: {{windowWidth - 60}}px;"
+      class="generated_image"></image>
+    <button
+      style="width: {{windowWidth - 60}}px;"
+      class="positive_button"
+      bindtap="onSave">保存</button>
+    <button
+      style="width: {{windowWidth - 60}}px;"
+      class="negative_button"
+      bindtap="onDiscard">丢了</button>
+  </view>
+</scroll-view>

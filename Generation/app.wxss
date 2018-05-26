@@ -1,0 +1,11 @@
+/*
+ * Revision History:
+ *     Initial: 2018/05/25      Lin Hao
+ */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #efefef;
+} 
