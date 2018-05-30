@@ -1,0 +1,25 @@
+<scroll-view
+  scroll-y
+  class="mine_content"
+  style="height: {{windowHeight}}px;">
+  <view class="mine_user">
+    <open-data class="mine_user_avatar" type="userAvatarUrl"></open-data>
+    <open-data class="mine_user_name" type="userNickName" lang="zh_CN"></open-data>
+  </view>
+  <view wx:for="{{label}}" wx:key="index">
+    <view class="mine_label"
+      id="{{index}}"
+      bindtap="onTapLabel">
+      <view class="mine_label_left">
+        <image
+          style="width: {{item[2]}}rem; height: {{item[3]}}rem; margin-right: {{2.1 - item[2]}}rem;"
+          src="{{item[1]}}"></image>
+        <text class="mine_label_title">{{item[0]}}</text>
+      </view>
+      <image
+        src="../../src/image/next.png"
+        class="mine_label_next_icon"></image>
+    </view>
+    <view wx:if="{{index == 3}}" class="separation"></view>
+  </view>
+</scroll-view>

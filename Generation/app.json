@@ -1,11 +1,31 @@
 {
-  "pages":[
-    "pages/index/index"
+  "pages": [
+    "pages/mine/mine",
+    "pages/index/index",
+    "pages/generated/generated"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#12B9C9",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "主页",
+        "iconPath": "src/image/home.png",
+        "selectedIconPath": "src/image/home_selected.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "src/image/mine.png",
+        "selectedIconPath": "src/image/mine_selected.png"
+      }
+    ]
+  },
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "手工表情包",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle": "black"
   }
 }

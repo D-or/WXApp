@@ -61,10 +61,6 @@ Page({
       }
     }
 
-    if (texts.length === 1) {
-      texts = ["", texts[0], ""]
-    }
-
     if (texts.length === 0) {
       wx.showToast({
         title: '(￣_￣ )表情包除了图，总得有几句话的吧',
