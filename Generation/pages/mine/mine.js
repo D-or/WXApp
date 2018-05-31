@@ -9,7 +9,7 @@ Page({
         1.5,
         1.2
       ], [
-        "联系我",
+        "关于",
         "../../src/image/contact.png",
         1.5,
         1.5
@@ -18,14 +18,34 @@ Page({
   },
 
   onTapLabel: function(e) {
-    let id = e.currentTarget.id
+    let id = e.currentTarget.id;
+    let itemList = ['3155965489@qq.com', 'github.com/DoubleWoodH'];
 
     switch (id) {
       case "0":
-        // wx.navigateTo({
-        //   url: "../../pages/collection/collection"
-        // })
-        break
+        wx.navigateTo({
+          url: "../../pages/generated/generated"
+        })
+        break;
+
+      case "1":
+        wx.showActionSheet({
+          itemList,
+          success: function(res) {
+            wx.setClipboardData({
+              data: itemList[res.tapIndex],
+              success: function() {
+                wx.showToast({
+                  title: '复制成功',
+                  mask: true,
+                  icon: 'success',
+                  duration: 1000
+                })
+              }
+            })
+          }
+        })
+        break;
 
       default:
         break

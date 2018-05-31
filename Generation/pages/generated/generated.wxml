@@ -1,2 +1,33 @@
-<!--pages/generated/generated.wxml-->
-<text>pages/generated/generated.wxml</text>
+<scroll-view
+  scroll-y
+  style="height: {{windowHeight}}px;"
+  class="container">
+  <view style="padding: 16px 20px 1px 20px;">
+    <view
+      wx:if="{{list}}"
+      wx:for="{{list}}"
+      wx:for-index="onceIndex"
+      wx:for-item="once"
+      wx:key="onceIndex"
+      class="once"
+      style="width: {{windowWidth - 56}}px;">
+      <view class="item">
+        <view
+          wx:for="{{once}}"
+          wx:key="index">
+          <image
+            wx:if="{{index !== 2}}"
+            src="{{item}}"
+            mode="aspectFit"
+            class="image"
+            style="width: {{(windowWidth - 72) / 2}}px; height: {{(windowWidth - 72) /2}}px;"
+            bindlongpress="onSave"
+            bindtap="onPreview"
+            data-image="{{item}}"
+            data-urls="{{once}}"></image>
+        </view>
+      </view>
+      <text class="text">{{once[2]}}</text>
+    </view>
+  </view>
+</scroll-view>

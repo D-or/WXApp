@@ -42,7 +42,24 @@ Page({
   onGenerate(e) {
     let self = this;
     let value = e.detail.value;
-    let texts = []
+    let texts = [];
+    let userID;
+
+    try {
+      userID = wx.getStorageSync("id")
+
+      if (!userID) {
+        wx.showToast({
+          title: '你已经拒绝了我，登录不了，哼！',
+          mask: true,
+          icon: 'none',
+          duration: 1000
+        })
+
+        return
+      }
+    } catch (e) {
+    }
 
     if (!this.data.image) {
       wx.showToast({
@@ -86,27 +103,48 @@ Page({
       name: 'image',
       formData:{
         'name': 'test',
-        'texts': texts
+        'texts': texts,
+        'userID': userID
       },
       success: function(res) {
         let data = JSON.parse(res.data);
+
+        switch (data.imageId) {
+          case 0:
+            wx.showToast({
+              title: 'Σ( ° △ °) 有不该有的文字耶~',
+              mask: true,
+              icon: 'none',
+              duration: 1000
+            })
+            break;
+
+          case -1:
+            wx.showToast({
+              title: '(╯°Д°)╯ ┻━┻ 没成功，再来一次！',
+              mask: true,
+              icon: 'none',
+              duration: 1000
+            })
+            break;
         
-        if (data.imageId !== -1) {
-          wx.showToast({
-            title: '@.@ 有了有了！',
-            mask: true,
-            icon: 'success',
-            duration: 1000
-          })
+          default:
+            wx.showToast({
+              title: '@.@ 有了有了！',
+              mask: true,
+              icon: 'success',
+              duration: 1000
+            })
 
-          self.setData({
-            generated: data.image,
-            textLines: 0
-          })
+            self.setData({
+              generated: data.image,
+              textLines: 0
+            })
 
-          self.setData({
-            textLines: 1
-          })
+            self.setData({
+              textLines: 1
+            })
+            break;
         }
       },
       fail: function(err) {
@@ -186,6 +224,9 @@ Page({
   },
 
   onLoad() {
+    const util = require("../../utils/util.js");
+    util.GetUserID();
+
     try {
       let res = wx.getSystemInfoSync();
       const { windowWidth, windowHeight } = res;

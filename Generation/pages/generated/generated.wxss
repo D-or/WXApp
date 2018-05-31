@@ -1,1 +1,28 @@
-/* pages/generated/generated.wxss */
+/*
+ * Revision History:
+ *     Initial: 2018/05/31      Lin Hao
+ */
+
+.once {
+  padding: 10px 8px 6px 8px;
+  margin-bottom: 16px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
+  box-shadow: 0px 8px 20px #dddddd;
+  text-align: end;
+}
+
+.item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  margin: 0 4px;
+}
+
+.text {
+  color: #999999;
+  font-size: 14px;
+}
