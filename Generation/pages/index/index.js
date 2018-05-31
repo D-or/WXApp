@@ -93,8 +93,7 @@ Page({
 
     wx.showLoading({
       title: '^_^ 玩命制作中...',
-      mask: true,
-      duration: 1000
+      mask: true
     })
 
     wx.uploadFile({
@@ -108,6 +107,7 @@ Page({
       },
       success: function(res) {
         let data = JSON.parse(res.data);
+        wx.hideLoading()
 
         switch (data.imageId) {
           case 0:
@@ -148,7 +148,7 @@ Page({
         }
       },
       fail: function(err) {
-        console.error(err)
+        wx.hideLoading()
         wx.showToast({
           title: '(╯°Д°)╯ ┻━┻ 没成功，再来一次！',
           mask: true,

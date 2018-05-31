@@ -2,9 +2,8 @@
   scroll-y
   style="height: {{windowHeight}}px;"
   class="container">
-  <view style="padding: 16px 20px 1px 20px;">
+  <view wx:if="{{list.length !== 0}}" class="content">
     <view
-      wx:if="{{list}}"
       wx:for="{{list}}"
       wx:for-index="onceIndex"
       wx:for-item="once"
@@ -29,5 +28,8 @@
       </view>
       <text class="text">{{once[2]}}</text>
     </view>
+  </view>
+  <view wx:else class="hinge">
+    <text>你这里面啥都没有，真让人失望...</text>
   </view>
 </scroll-view>
