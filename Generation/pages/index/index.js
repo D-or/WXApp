@@ -9,7 +9,10 @@ Page({
     windowWidth: 0,
     textLines: 1,
     image: "",
-    generated: ""
+    generated: "",
+    choices: ["图片下", "图片内", "图片上"],
+    sliderValue: 0,
+    color: "black"
   },
 
   onChooseImage() {
@@ -39,11 +42,61 @@ Page({
     this.setData({ textLines })
   },
 
+  onDrag(e) {
+    const value = e.detail.value;
+
+    if (value < 25) {
+      for (let i = value; i >= 0; i--) {
+        setTimeout(() => this.setData({
+          sliderValue: i
+        }), 50)
+      }
+    } else if (value >= 25 && value <= 75) {
+      if (value > 50) {
+        for (let i = value; i >= 50; i--) {
+          setTimeout(() => this.setData({
+            sliderValue: i
+          }), 50)
+        }
+      } else {
+        for (let i = value; i <= 50; i++) {
+          setTimeout(() => this.setData({
+            sliderValue: i
+          }), 50)
+        }
+      }
+    } else {
+      for (let i = value; i <= 100; i++) {
+        setTimeout(() => this.setData({
+          sliderValue: i
+        }), 50)
+      }
+    }
+  },
+
+  onSwitch(e) {
+    let color = "black";
+    let value = e.detail.value;
+
+    if (!value) {
+      color = "white";
+    }
+
+    this.setData({ color })
+  },
+
   onGenerate(e) {
     let self = this;
     let value = e.detail.value;
     let texts = [];
     let userID;
+    let position = "bottom";
+
+    if (self.data.sliderValue === 50) {
+      position = "inside";
+    } else if (self.data.sliderValue === 100) {
+      position = "top";
+    }
 
     try {
       userID = wx.getStorageSync("id")
@@ -61,7 +114,7 @@ Page({
     } catch (e) {
     }
 
-    if (!this.data.image) {
+    if (!self.data.image) {
       wx.showToast({
         title: '(￣_￣ )不跟没有图的人交朋友',
         mask: true,
@@ -103,7 +156,9 @@ Page({
       formData:{
         'name': 'test',
         'texts': texts,
-        'userID': userID
+        'userID': userID,
+        "position": position,
+        "color": self.data.color
       },
       success: function(res) {
         let data = JSON.parse(res.data);
@@ -137,12 +192,7 @@ Page({
             })
 
             self.setData({
-              generated: data.image,
-              textLines: 0
-            })
-
-            self.setData({
-              textLines: 1
+              generated: data.image
             })
             break;
         }

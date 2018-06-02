@@ -1,7 +1,7 @@
 <scroll-view
   scroll-y
-  style="height: {{windowHeight}}px;"
-  class="container">
+  class="container {{generated ? 'fixed' : ''}}"
+  style="height: {{windowHeight}}px;">
   <view class="generate_content {{generated ? 'generate_content_blur' : ''}}">
     <view
       style="height: {{windowWidth - 60}}px; width: {{windowWidth - 60}}px;"
@@ -19,6 +19,25 @@
         class="image_add"
         mode="aspectFit">
       </image>
+    </view>
+    <text class="label">文字位置:</text>
+    <slider
+      bindchange="onDrag"
+      value="{{sliderValue}}"
+      block-size="16"
+      activeColor="#e9e9e9"
+      block-color="#12B9C9"
+      style="margin: 0 36px;" />
+    <view class="choices">
+      <block wx:for="{{choices}}" wx:key="index">
+        <text class="choices_text">{{item}}</text>
+      </block>
+    </view>
+    <view>
+      <text class="label">文字颜色:</text>
+      <text class="switch_text">白色</text>
+      <switch checked color="#12B9C9" bindchange="onSwitch" style="margin: 0 4px;" />
+      <text class="switch_text">黑色</text>
     </view>
     <form bindsubmit="onGenerate">
       <view wx:for="{{textLines}}" wx:key="index">
@@ -49,18 +68,19 @@
         class="positive_button">生成</button>
     </form>
   </view>
-  <view wx:if="{{generated}}" class="generated_content">
-    <image
-      src="{{generated}}"
-      style="height: {{windowWidth - 60}}px; width: {{windowWidth - 60}}px;"
-      class="generated_image"></image>
-    <button
-      style="width: {{windowWidth - 60}}px;"
-      class="positive_button"
-      bindtap="onSave">保存</button>
-    <button
-      style="width: {{windowWidth - 60}}px;"
-      class="negative_button"
-      bindtap="onDiscard">丢了</button>
-  </view>
 </scroll-view>
+<view wx:if="{{generated}}" class="generated_content">
+  <image
+    mode="aspectFit"
+    src="{{generated}}"
+    style="height: {{windowWidth - 60}}px; width: {{windowWidth - 60}}px;"
+    class="generated_image"></image>
+  <button
+    style="width: {{windowWidth - 60}}px;"
+    class="positive_button"
+    bindtap="onSave">保存</button>
+  <button
+    style="width: {{windowWidth - 60}}px;"
+    class="negative_button"
+    bindtap="onDiscard">丢了</button>
+</view>
