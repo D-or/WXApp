@@ -2,7 +2,12 @@ Page({
   data: {
     list: [],
     windowHeight: 0,
-    windowWidth: 0
+    windowWidth: 0,
+    touchStart: 0,
+    distance: 0,
+    opacity: 0,
+    currentTargetId: 0,
+    idList: []
   },
 
   onPreview(e) {
@@ -77,6 +82,129 @@ Page({
     })
   },
 
+  onInit() {
+    this.setData({
+      opacity: 0
+    })
+  },
+
+  onTouchStart(e) {
+    this.setData({
+      opacity: 0
+    })
+
+    let point = {
+      x: e.changedTouches[0].clientX,
+      y: e.changedTouches[0].clientY
+    };
+
+    this.setData({
+      currentTargetId: e.currentTarget.id,
+      touchStart: point
+    })
+  },
+
+  onTouchMove(e) {
+    let distance = this.data.touchStart.x - e.changedTouches[0].clientX;
+    let yDis = e.changedTouches[0].clientY - this.data.touchStart.y;
+
+    if (yDis > 150) {
+      this.setData({
+        opacity: 0
+      })
+
+      return
+    }
+
+    this.setData({ distance })
+
+    if (distance > 0) {
+      distance /= 250
+
+      this.setData({
+        opacity: distance
+      })
+    }
+  },
+
+  onTouchEnd(e) {
+    let finalDistance = this.data.touchStart.x - e.changedTouches[0].clientX
+
+    let yDis = e.changedTouches[0].clientY - this.data.touchStart.y;
+
+    if (yDis > 150) {
+      this.setData({
+        opacity: 0
+      })
+
+      return
+    }
+
+    if (finalDistance < 100) {
+      this.setData({
+        opacity: 0
+      })
+    } else {
+      this.setData({
+        opacity: 1
+      })
+    }
+  },  
+
+  onDelete(e) {
+    let id = this.data.idList[e.currentTarget.id];
+    let self = this;
+
+    wx.showLoading({
+      title: '正在删除中...',
+      mask: true
+    })
+
+    wx.request({
+      method: "POST",
+      url: "https://www.doublewoodh.club/api/image/delete",
+      data: {
+        "id": id
+      },
+      success: function(res) {
+        wx.hideLoading()
+
+        const { status } = res.data;
+
+        if (status === 0) {
+          let list = self.data.list;
+          list.splice(e.currentTarget.id, 1);
+
+          self.setData({ list })
+  
+          wx.showToast({
+            title: '黑历史删掉了~',
+            mask: true,
+            icon: 'success',
+            duration: 1000
+          })
+        } else {
+          wx.showToast({
+            title: "完了，黑历史没有删掉...",
+            mask: true,
+            icon: 'none',
+            duration: 1000
+          })
+        }
+      },
+      fail: function() {
+        wx.hideLoading()
+
+        wx.showToast({
+          title: "完了，黑历史没有删掉...",
+          mask: true,
+          icon: 'none',
+          duration: 1000
+        })
+      }
+    })
+  },
+
   onLoad: function() {
     let self = this;
     const util = require("../../utils/util.js");
@@ -125,25 +253,32 @@ Page({
           }
 
           let images = res.data.images;
-          let list = [];
 
           if (!images) {
             return
           }
 
+          let list = [];
+          let idList = [];
+
           images.map((item, index) => {
             if (index % 2 === 0) {
               let once = [];
+              let onceId = [];
 
               once.push(item.path);
               once.push(images[index + 1].path);
               once.push(util.formatTime(new Date(item.created)));
 
+              onceId.push(item.id);
+              onceId.push(images[index + 1].id);
+
               list.unshift(once);
+              idList.unshift(onceId);
             }
           })
 
-          self.setData({ list })
+          self.setData({ list, idList })
         },
         fail: function() {
           wx.hideLoading();

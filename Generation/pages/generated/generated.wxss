@@ -8,6 +8,7 @@
 }
 
 .once {
+  position: relative;
   padding: 10px 8px 6px 8px;
   margin-bottom: 16px;
   background-color: rgba(255, 255, 255, 0.5);
@@ -29,6 +30,19 @@
 .text {
   color: #999999;
   font-size: 14px;
+}
+
+.delete {
+  height: 100%;
+  background-color: rgba(248, 52, 17, 0.801);
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
 }
 
 @keyframes hinge {
