@@ -112,3 +112,122 @@
 .negative_button {
   margin-top: 30px;
 }
+
+.push_back {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2));
+}
+
+.push_semi_circle {
+  margin-top: 20px;
+  left: 0;
+  border-radius: 50% 0 0 50%;
+  background-color: rgba(255, 255, 255, 0.8);
+  height: 8%;
+  width: 18%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.push_semi_circle_icon {
+  height: 80%;
+  width: 80%;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translate3d(87%, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.slideInRight {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 80%;
+  animation-duration: 1s;
+  animation-name: slideInRight;
+  display: flex;
+  animation-fill-mode: both;
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(87%, 0, 0);
+    visibility: visible;
+  }
+}
+
+.slideOutRight {
+  animation-duration: 0.5s;
+  animation-name: slideOutRight;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 80%;
+  display: flex;
+  animation-fill-mode: both;
+}
+
+.slide_null {
+  position: fixed;
+  top: 0;
+  left: 88%;
+  height: 100%;
+  width: 80%;
+  display: flex;
+}
+
+.push_right {
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 100%;
+}
+
+.push_right_content {
+  margin: 6% 8%;
+  padding-bottom: 6%;
+}
+
+.push_right_image {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.push_right_image_item {
+  background-color: white;
+  width: 60px;
+  height: 60px;
+  margin: 2% 0;
+}
+
+.push_right_button {
+  margin-top: 20px;
+  background-color: #12B9C9;
+  padding: 4px 0;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.push_right_button_text {
+  color: white;
+  font-size: 16px;
+}

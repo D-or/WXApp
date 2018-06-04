@@ -2,7 +2,7 @@
   scroll-y
   class="container {{generated ? 'fixed' : ''}}"
   style="height: {{windowHeight}}px;">
-  <view class="generate_content {{generated ? 'generate_content_blur' : ''}}">
+  <view class="generate_content {{generated || slideIn ? 'generate_content_blur' : ''}}">
     <view
       style="height: {{windowWidth - 60}}px; width: {{windowWidth - 60}}px;"
       class="image_content"
@@ -83,4 +83,29 @@
     style="width: {{windowWidth - 60}}px;"
     class="negative_button"
     bindtap="onDiscard">丢了</button>
+</view>
+<view wx:if="{{slideIn}}" class="push_back" bindtap="onSlideIn"></view>
+<view class="{{slideIn === null ? 'slide_null' : slideIn ? 'slideInRight' : 'slideOutRight'}}">
+  <view class="push_semi_circle" bindtap="onSlideIn">
+    <image src="{{slideIn ? '../../src/image/right.png' : '../../src/image/left.png'}}" class="push_semi_circle_icon"/>
+  </view>
+  <scroll-view
+    scroll-y
+    class="push_right"
+    style="height: {{windowHeight}}px;">
+    <view class="push_right_content">
+      <text class="label">可选图片(部分来自用户上传):</text>
+      <view class="push_right_image">
+        <block
+          wx:for="{{[1, 2, 3, 4, 5, 6, 7, 2, 3, 4, 5, 6, 7, 7, 2, 3, 4, 5, 6, 7, 7, 2, 3, 4, 5, 6, 7, 7, 2, 3, 4, 5, 6, 7, 7, 2, 3, 4, 5, 6, 7]}}"
+          wx:key="index">
+          <view class="push_right_image_item">
+          </view>
+        </block>
+      </view>
+      <view class="push_right_button">
+        <text class="push_right_button_text">我也要上传</text>
+      </view>
+    </view>
+  </scroll-view>
 </view>

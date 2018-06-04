@@ -12,7 +12,8 @@ Page({
     generated: "",
     choices: ["图片下", "图片内", "图片上"],
     sliderValue: 0,
-    color: "black"
+    color: "black",
+    slideIn: null
   },
 
   onChooseImage() {
@@ -270,6 +271,14 @@ Page({
   onDiscard() {
     this.setData({
       generated: ""
+    })
+  },
+
+  onSlideIn() {
+    let slideIn = this.data.slideIn;
+
+    this.setData({
+      slideIn: !slideIn
     })
   },
 
