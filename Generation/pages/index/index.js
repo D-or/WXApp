@@ -13,7 +13,8 @@ Page({
     choices: ["图片下", "图片内", "图片上"],
     sliderValue: 0,
     color: "black",
-    slideIn: null
+    slideIn: null,
+    uploaded: []
   },
 
   onChooseImage() {
@@ -275,10 +276,170 @@ Page({
   },
 
   onSlideIn() {
-    let slideIn = this.data.slideIn;
+    let self = this;
+    let slideIn = self.data.slideIn;
 
-    this.setData({
+    self.setData({
       slideIn: !slideIn
+    })
+
+    if (!slideIn && self.data.uploaded.length === 0) {
+      wx.showLoading({
+        title: '我正在找啦~',
+        mask: true
+      })
+
+      wx.request({
+        url: "https://www.doublewoodh.club/api/image/uploaded/getall",
+        success: function(res) {
+          wx.hideLoading();
+
+          if (res.statusCode !== 200) {
+            wx.showToast({
+              title: '好像出了点问题诶...',
+              mask: true,
+              icon: 'none',
+              duration: 1000
+            })
+
+            return
+          }
+
+          self.setData({
+            uploaded: res.data.images ? res.data.images : []
+          })
+        },
+        fail: function() {
+          wx.hideLoading();
+          wx.showToast({
+            title: '你的网络有点问题诶..',
+            mask: true,
+            icon: 'none',
+            duration: 1000
+          })
+        }
+      })
+    }
+  },
+
+  onChooseUploaded(e) {
+    let self = this;
+
+    console.log(self.data.uploaded[e.currentTarget.id].path)
+
+    wx.getImageInfo({
+      src: self.data.uploaded[e.currentTarget.id].path,
+      success: function (data) {
+        self.setData({
+          image: data.path,
+          slideIn: false
+        })
+      }
+    })
+  },
+
+  onUpload() {
+    let self = this;
+    let userID;
+
+    try {
+      userID = wx.getStorageSync("id")
+
+      if (!userID) {
+        wx.showToast({
+          title: '你已经拒绝了我，登录不了，哼！',
+          mask: true,
+          icon: 'none',
+          duration: 1000
+        })
+
+        return
+      }
+    } catch (e) {
+    }
+
+    wx.chooseImage({
+      count: 1,
+      success(res) {
+        wx.showLoading({
+          title: '^_^ 拼命上传中...',
+          mask: true
+        })
+
+        wx.uploadFile({
+          url: 'https://www.doublewoodh.club/api/image/upload',
+          filePath: res.tempFilePaths[0],
+          name: 'image',
+          formData: {
+            "userID": userID
+          },
+          success: function(res) {
+            let data = JSON.parse(res.data);
+            wx.hideLoading()
+    
+            if (data.status === 0) {
+              wx.showToast({
+                title: '@.@ 传上去咯~',
+                mask: true,
+                icon: 'success',
+                duration: 1000
+              })
+
+              wx.showLoading({
+                title: '我再重新看看~',
+                mask: true
+              })
+        
+              wx.request({
+                url: "https://www.doublewoodh.club/api/image/uploaded/getall",
+                success: function(res) {
+                  wx.hideLoading();
+        
+                  if (res.statusCode !== 200) {
+                    wx.showToast({
+                      title: '好像出了点问题诶...',
+                      mask: true,
+                      icon: 'none',
+                      duration: 1000
+                    })
+        
+                    return
+                  }
+                
+                  self.setData({
+                    uploaded: res.data.images
+                  })
+                },
+                fail: function() {
+                  wx.hideLoading();
+                  wx.showToast({
+                    title: '你的网络有点问题诶..',
+                    mask: true,
+                    icon: 'none',
+                    duration: 1000
+                  })
+                }
+              })
+            } else {
+              wx.showToast({
+                title: '(╯°Д°)╯ ┻━┻ 没成功，再来一次！',
+                mask: true,
+                icon: 'none',
+                duration: 1000
+              })
+            }
+          },
+          fail: function(err) {
+            wx.hideLoading()
+            wx.showToast({
+              title: '(╯°Д°)╯ ┻━┻ 没成功，再来一次！',
+              mask: true,
+              icon: 'none',
+              duration: 1000
+            })
+          }
+        })
+      }
     })
   },
 

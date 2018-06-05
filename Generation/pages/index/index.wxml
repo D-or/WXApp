@@ -95,15 +95,24 @@
     style="height: {{windowHeight}}px;">
     <view class="push_right_content">
       <text class="label">可选图片(部分来自用户上传):</text>
-      <view class="push_right_image">
+      <view wx:if="{{uploaded.length !== 0}}" class="push_right_image">
         <block
-          wx:for="{{[1, 2, 3, 4, 5, 6, 7, 2, 3, 4, 5, 6, 7, 7, 2, 3, 4, 5, 6, 7, 7, 2, 3, 4, 5, 6, 7, 7, 2, 3, 4, 5, 6, 7, 7, 2, 3, 4, 5, 6, 7]}}"
+          wx:for="{{uploaded}}"
           wx:key="index">
-          <view class="push_right_image_item">
-          </view>
+          <image
+            src="{{item.path}}"
+            mode="aspectFit"
+            class="push_right_image_item"
+            id="{{index}}"
+            bindtap="onChooseUploaded" />
         </block>
       </view>
-      <view class="push_right_button">
+      <view wx:else class="push_right_default">
+        <view wx:if="{{slideIn}}" class="perspective_down">
+          <text class="perspective_down_text">这里啥都没有，要不你上传一张？</text>
+        </view>
+      </view>
+      <view class="push_right_button" bindtap="onUpload">
         <text class="push_right_button_text">我也要上传</text>
       </view>
     </view>
