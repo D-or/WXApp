@@ -12,7 +12,7 @@
       bindtap="onTapLabel">
       <view class="mine_label_left">
         <image
-          style="width: {{item[2]}}rem; height: {{item[3]}}rem; margin-right: {{2.1 - item[2]}}rem;"
+          style="width: {{item[2] + item[4]}}rem; height: {{item[3] + item[4]}}rem; margin-right: {{2.3 - item[2] - item[4]}}rem; margin-left: {{-item[4]/2}}rem;"
           src="{{item[1]}}"></image>
         <text class="mine_label_title">{{item[0]}}</text>
       </view>

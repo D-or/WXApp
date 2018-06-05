@@ -7,12 +7,20 @@ Page({
         "生成历史",
         "../../src/image/generated.png",
         1.5,
-        1.2
+        1.2,
+        0
+      ], [
+        "上传历史",
+        "../../src/image/uploaded.png",
+        1.5,
+        1.5,
+        0.2
       ], [
         "关于",
         "../../src/image/contact.png",
-        1.5,
-        1.5
+        1.6,
+        1.6,
+        0
       ]
     ]
   },
@@ -29,6 +37,12 @@ Page({
         break;
 
       case "1":
+        wx.navigateTo({
+          url: "../../pages/uploaded/uploaded"
+        })
+        break;
+
+      case "2":
         wx.showActionSheet({
           itemList,
           success: function(res) {

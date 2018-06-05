@@ -1,0 +1,131 @@
+/*
+ * Revision History:
+ *     Initial: 2018/06/06      Lin Hao
+ */
+
+ .content {
+  padding: 16px 20px 1px 20px;
+}
+
+.once {
+  position: relative;
+  padding: 10px 8px 6px 8px;
+  margin-bottom: 16px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
+  box-shadow: 0px 8px 20px #dddddd;
+  text-align: end;
+}
+
+.item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  margin: 0 4px;
+  background-color: red;
+}
+
+.text {
+  color: #999999;
+  font-size: 14px;
+}
+
+.delete {
+  height: 100%;
+  background-color: rgba(248, 52, 17, 0.801);
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+}
+
+@keyframes hinge {
+  0% {
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+
+  10% {
+    transform: rotate3d(0, 0, 1, 120deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+
+  20% {
+    transform: rotate3d(0, 0, 1, 60deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+
+  30% {
+    transform: rotate3d(0, 0, 1, 105deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+
+  40% {
+    transform: rotate3d(0, 0, 1, 75deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+    opacity: 1;
+  }
+
+  50% {
+    transform: rotate3d(0, 0, 1, 100deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+
+  60% {
+    transform: rotate3d(0, 0, 1, 80deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+
+  70% {
+    transform: rotate3d(0, 0, 1, 95deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+
+  80% {
+    transform: rotate3d(0, 0, 1, 85deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+    opacity: 1;
+  }
+
+  90% {
+    transform: rotate3d(0, 0, 1, 92.5deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+  }
+
+  100% {
+    transform: rotate3d(0, 0, 1, 90deg);
+    transform-origin: top left;
+    animation-timing-function: ease-in-out;
+    opacity: 1;
+  }
+}
+
+.hinge {
+  animation-duration: 5s;
+  animation-delay: 0.5s;
+  animation-name: hinge;
+  animation-fill-mode: both;
+  position: fixed;
+  top: 30%;
+  left: 55%;
+  background-color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  box-shadow: 0px 8px 20px #dddddd;
+}

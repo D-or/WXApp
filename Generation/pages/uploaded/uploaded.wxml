@@ -1,0 +1,41 @@
+<view bindtap="onInit">
+        <scroll-view
+          scroll-y
+          style="height: {{windowHeight}}px;"
+          class="container"
+          bindscroll="onInit">
+          <view wx:if="{{list.length !== 0}}" class="content">
+            <view
+              wx:for="{{list}}"
+              wx:key="index"
+              class="once"
+              style="width: {{windowWidth - 56}}px;"
+              id="{{index}}"
+              bindtouchstart="onTouchStart"
+              bindtouchmove="onTouchMove"
+              bindtouchend="onTouchEnd">
+              <view class="item">
+                <image
+                  src="{{item.path}}"
+                  mode="aspectFit"
+                  class="image"
+                  style="width: {{(windowWidth - 72) / 2}}px; height: {{(windowWidth - 72) /2}}px;"
+                  bindlongpress="onSave"
+                  bindtap="onPreview"
+                  data-image="{{item.path}}"></image>
+              </view>
+              <text class="text">{{item.created}}</text>
+              <view
+                class="delete"
+                style="opacity: {{currentTargetId == index ? opacity : 0}};"
+                id="{{index}}"
+                bindtap="onDelete">
+                <text style="color: white;">删除</text>
+              </view>
+            </view>
+          </view>
+          <view wx:else class="hinge">
+            <text>你这里面啥都没有，真让人失望...</text>
+          </view>
+        </scroll-view>
+      </view>
