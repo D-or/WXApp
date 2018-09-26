@@ -74,7 +74,9 @@
     mode="aspectFit"
     src="{{generated}}"
     style="height: {{windowWidth - 60}}px; width: {{windowWidth - 60}}px;"
-    class="generated_image"></image>
+    class="generated_image"
+    data-src="{{generated}}"
+    bind:tap="onPreview"></image>
   <button
     style="width: {{windowWidth - 60}}px;"
     class="positive_button"

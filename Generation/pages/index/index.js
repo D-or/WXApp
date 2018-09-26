@@ -196,6 +196,10 @@ Page({
             self.setData({
               generated: data.image
             })
+
+            wx.previewImage({
+              urls: [ data.image ]
+            })
             break;
         }
       },
@@ -208,6 +212,12 @@ Page({
           duration: 1000
         })
       }
+    })
+  },
+
+  onPreview(e) {
+    wx.previewImage({
+      urls: [ e.currentTarget.dataset.src ]
     })
   },
 
@@ -454,5 +464,17 @@ Page({
       this.setData({ windowWidth, windowHeight })
     } catch (e) {
     }
+  },
+
+  onShow() {
+    let updateManager = wx.getUpdateManager()
+    updateManager.onCheckForUpdate(function(res) {
+      // console.log(res)
+      if (res.hasUpdate) {
+        updateManager.onUpdateReady(function() {
+          updateManager.applyUpdate()
+        })
+      }
+    })
   }
 })
