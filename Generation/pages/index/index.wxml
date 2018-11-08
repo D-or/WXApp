@@ -22,6 +22,7 @@
     </view>
     <text class="label">文字位置:</text>
     <slider
+      disabled="{{disabled}}"
       bindchange="onDrag"
       value="{{sliderValue}}"
       block-size="16"
@@ -36,20 +37,25 @@
     <view>
       <text class="label">文字颜色:</text>
       <text class="switch_text">白色</text>
-      <switch checked color="#12B9C9" bindchange="onSwitch" style="margin: 0 4px;" />
+      <switch disabled="{{disabled}}" checked color="#12B9C9" bindchange="onSwitch" style="margin: 0 4px;" />
       <text class="switch_text">黑色</text>
+    </view>
+    <view style="margin-top: 10px;">
+      <text class="label">纯文字表情:</text>
+      <switch color="#12B9C9" bindchange="onPure" style="margin: 0 4px;" />
+      <text class="switch_text">(添不添加图片都一样哦~)</text>
     </view>
     <form bindsubmit="onGenerate">
       <view wx:for="{{textLines}}" wx:key="index">
         <view
           style="width: {{windowWidth - 80}}px;"
           class="input_content">
-          <input class="input" name="{{index}}" maxlength="9" placeholder="最多就9个字哦~" />
+          <input class="input" name="{{index}}" maxlength="9" placeholder="最多 9 个字哦~" />
         </view>
         <view
           wx:if="{{index === textLines - 1}}"
           class="text_adding_content">
-          <text class="text_ps">（现在最多只能添加三句）</text>
+          <text class="text_ps">最多 3 行哦~</text>
           <image
             wx:if="{{index !== 2}}"
             src="../../src/image/add_text.png"

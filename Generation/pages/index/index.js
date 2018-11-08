@@ -14,7 +14,8 @@ Page({
     sliderValue: 0,
     color: "black",
     slideIn: null,
-    uploaded: []
+    uploaded: [],
+    disabled: false
   },
 
   onChooseImage() {
@@ -87,17 +88,32 @@ Page({
     this.setData({ color })
   },
 
+  onPure(e) {
+    let disabled = false;
+
+    if (e.detail.value) {
+      disabled = true;
+    }
+
+    this.setData({ disabled })
+  },
+
   onGenerate(e) {
     let self = this;
     let value = e.detail.value;
     let texts = [];
     let userID;
     let position = "bottom";
+    let { image: filePath, color, disabled } = self.data;
 
     if (self.data.sliderValue === 50) {
       position = "inside";
     } else if (self.data.sliderValue === 100) {
       position = "top";
+    }
+
+    if (disabled) {
+      position = "center";
     }
 
     try {
@@ -116,9 +132,15 @@ Page({
     } catch (e) {
     }
 
-    if (!self.data.image) {
+    for (let i in value) {
+      if (value[i]) {
+        texts.push(value[i])
+      }
+    }
+
+    if (position !== "center" && !filePath) {
       wx.showToast({
-        title: '(￣_￣ )不跟没有图的人交朋友',
+        title: '(￣_￣ )不放图片请选择纯文字表情哦~',
         mask: true,
         icon: 'none',
         duration: 1500
@@ -126,16 +148,10 @@ Page({
 
       return
     }
-    
-    for (let i in value) {
-      if (value[i]) {
-        texts.push(value[i])
-      }
-    }
 
     if (texts.length === 0) {
       wx.showToast({
-        title: '(￣_￣ )表情包除了图，总得有几句话的吧',
+        title: '(￣_￣ )表情包就算没有图，也要有几句话的吧',
         mask: true,
         icon: 'none',
         duration: 1500
@@ -151,57 +167,90 @@ Page({
       mask: true
     })
 
-    wx.uploadFile({
-      url: 'https://www.doublewoodh.club/api/image/generate',
-      filePath: self.data.image,
-      name: 'image',
-      formData:{
-        'name': 'test',
-        'texts': texts,
-        'userID': userID,
-        "position": position,
-        "color": self.data.color
-      },
-      success: function(res) {
-        let data = JSON.parse(res.data);
-        wx.hideLoading()
+    wx.downloadFile({
+      url: "https://www.doublewoodh.club/images/others/empty_1.png",
+      success(res) {
+        if (res.statusCode === 200) {
+          if (position === "center") {
+            filePath = res.tempFilePath;
+            color = "black";
+          }
+        }
 
-        switch (data.imageId) {
-          case 0:
-            wx.showToast({
-              title: 'Σ( ° △ °) 有不该有的文字耶~',
-              mask: true,
-              icon: 'none',
-              duration: 1000
-            })
-            break;
+        wx.uploadFile({
+          url: 'https://www.doublewoodh.club/api/image/generate',
+          filePath,
+          name: 'image',
+          formData:{
+            'texts': texts,
+            'userID': userID,
+            "position": position,
+            "color": color
+          },
+          success: function(res) {
+            if (res.statusCode != 200) {
+              wx.hideLoading()
+              wx.showToast({
+                title: '(╯°Д°)╯ ┻━┻ 没成功，再来一次！',
+                mask: true,
+                icon: 'none',
+                duration: 1000
+              })
 
-          case -1:
+              return
+            }
+            let data = JSON.parse(res.data);
+            wx.hideLoading()
+    
+            switch (data.imageId) {
+              case 0:
+                wx.showToast({
+                  title: 'Σ( ° △ °) 有不该有的文字耶~',
+                  mask: true,
+                  icon: 'none',
+                  duration: 1000
+                })
+                break;
+    
+              case -1:
+                wx.showToast({
+                  title: '(╯°Д°)╯ ┻━┻ 没成功，再来一次！',
+                  mask: true,
+                  icon: 'none',
+                  duration: 1000
+                })
+                break;
+
+              default:
+                wx.showToast({
+                  title: '@.@ 有了有了！',
+                  mask: true,
+                  icon: 'success',
+                  duration: 1000
+                })
+
+                console.log(data)
+    
+                self.setData({
+                  generated: data.image
+                })
+    
+                wx.previewImage({
+                  urls: [ data.image ]
+                })
+                break;
+            }
+          },
+          fail: function(err) {
+            wx.hideLoading()
             wx.showToast({
               title: '(╯°Д°)╯ ┻━┻ 没成功，再来一次！',
               mask: true,
               icon: 'none',
               duration: 1000
             })
-            break;
-        
-          default:
-            wx.showToast({
-              title: '@.@ 有了有了！',
-              mask: true,
-              icon: 'success',
-              duration: 1000
-            })
-
-            self.setData({
-              generated: data.image
-            })
-
-            wx.previewImage({
-              urls: [ data.image ]
-            })
-            break;
-        }
+          }
+        })
       },
       fail: function(err) {
         wx.hideLoading()
@@ -476,5 +525,13 @@ Page({
         })
       }
     })
+  },
+
+  onShareAppMessage() {
+    return {
+      title: '图 + 文字 = 表情包',
+      path: '/pages/index/index',
+      imageUrl: "https://www.doublewoodh.club/images/others/cover_3.gif"
+    }
   }
 })

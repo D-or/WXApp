@@ -25,7 +25,7 @@
   border: 1px solid #eeeeee;
   border-radius: 2px;
   background-color: white;
-  margin-bottom: 16px;
+  margin-bottom: 0.6rem;
 }
 
 .image_add {
@@ -78,6 +78,7 @@
 .text_ps {
   color: #999999;
   font-size: 12px;
+  padding-right: 4px;
 }
 
 .image_text_op {
