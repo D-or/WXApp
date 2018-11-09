@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/mine/mine",
     "pages/generated/generated",
-    "pages/uploaded/uploaded"
+    "pages/uploaded/uploaded",
+    "pages/feedback/feedback"
   ],
   "tabBar": {
     "color": "#999999",

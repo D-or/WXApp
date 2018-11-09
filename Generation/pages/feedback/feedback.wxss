@@ -1,0 +1,51 @@
+/*
+ * Revision History:
+ *     Initial:        2018/11/09        DoubleWoodH
+ */
+
+.feedback_content {
+  background-color: #f6f8fa;
+}
+
+.textarea_box {
+  position: relative;
+  padding: 16px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.textarea_placeholder {
+  font-size: 1rem;
+  color: #aaaaaa;
+}
+
+.textarea {
+  background-color: white;
+  box-shadow: 0 0 16px #cccccc;
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 1rem;
+  color: #333333;
+}
+
+.textarea_words_count_box {
+  position: absolute;
+  z-index: 99;
+  padding: 0 8px 4px 0;
+  display: flex;
+}
+
+.textarea_words_count {
+  font-size: 1rem;
+  color: #aaaaaa;
+}
+
+.input_box {
+  padding: 16px;
+}
+
+.button {
+  margin: 3rem 16px 0 16px;
+  border-color: transparent;
+}

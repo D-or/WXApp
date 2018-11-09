@@ -1,0 +1,44 @@
+<scroll-view
+  scroll-y
+  class="feedback_content"
+  style="height: {{windowHeight}}px;">
+  <view class="textarea_box">
+    <view class="textarea_words_count_box">
+      <text class="textarea_words_count">{{count}}/60</text>
+    </view>
+    <textarea
+      placeholder="有啥说啥，随意一点..."
+      placeholder-class="textarea_placeholder"
+      maxlength="60"
+      adjust-position="false"
+      bindinput="onTextarea"
+      class="textarea"
+      style="width: {{ windowWidth - 48 }}px;"
+    />
+  </view>
+  <view class="input_box">
+    <input class="input"
+      placeholder="想让我们怎么联系你呢？(选填)"
+      placeholder-class="textarea_placeholder"
+      maxlength="20"
+      bindblur="onBlur"
+      class="textarea"
+      style="width: {{ windowWidth - 48 }}px;"
+    />
+  </view>
+  <button
+    wx:if="{{scopeUserInfo}}"
+    class="button"
+    type="primary"
+    bindtap="onFeedback">
+    提交
+  </button>
+  <button
+    wx:else
+    class="button"
+    type="primary"
+    open-type="getUserInfo"
+    bindgetuserinfo="onUserInfo">
+    提交
+  </button>
+</scroll-view>

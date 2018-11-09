@@ -16,6 +16,12 @@ Page({
         1.5,
         0.2
       ], [
+        "意见反馈",
+        "../../src/image/feedback.png",
+        1.6,
+        1.4,
+        0
+      ], [
         "关于",
         "../../src/image/contact.png",
         1.6,
@@ -43,6 +49,12 @@ Page({
         break;
 
       case "2":
+        wx.navigateTo({
+          url: "../../pages/feedback/feedback"
+        })
+        break;
+
+      case "3":
         wx.showActionSheet({
           itemList,
           success: function(res) {
