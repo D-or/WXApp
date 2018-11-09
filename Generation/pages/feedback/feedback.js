@@ -11,7 +11,8 @@ Page({
     userInfo: null,
     scopeUserInfo: false,
     message: "",
-    phoneOrMail: ""
+    phoneOrMail: "",
+    err: false
   },
 
   onTextarea(e) {
@@ -29,10 +30,17 @@ Page({
     })
   },
 
+  onInput() {
+    this.setData({
+      err: false
+    })
+  },
+
   onFeedback({}, that) {
     let self = that ? that : this;
+    const { userInfo, phoneOrMail, message } = self.data;
 
-    if (!self.data.message) {
+    if (!message) {
       wx.showToast({
         title: '总得说点什么吧...',
         mask: true,
@@ -43,7 +51,16 @@ Page({
       return
     }
 
-    const { userInfo, phoneOrMail, message } = self.data;
+    if (phoneOrMail) {
+      if (!phoneOrMail.match(/\w+[@]{1}\w+[.]\w+/) && !phoneOrMail.match(/^1\d{10}$/)) {
+        this.setData({
+          err: true
+        })
+
+        return
+      }
+    }
+
     const { avatarUrl:avatar, nickName, gender, country, province, city } = userInfo;
     let data = {
       userID: wx.getStorageSync("id") ? Number(wx.getStorageSync("id")) : -1,

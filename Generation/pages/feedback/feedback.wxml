@@ -22,9 +22,20 @@
       placeholder-class="textarea_placeholder"
       maxlength="20"
       bindblur="onBlur"
-      class="textarea"
+      bindinput="onInput"
+      class="textarea input"
       style="width: {{ windowWidth - 48 }}px;"
     />
+    <test
+      wx:if="{{err}}"
+      class="error_text">
+      请填写正确的手机号或者邮箱！
+    </test>
+    <test
+      wx:else
+      class="tips_text">
+      ( 手机号或者邮箱 )
+    </test>
   </view>
   <button
     wx:if="{{scopeUserInfo}}"
